@@ -24,6 +24,7 @@ sudo apt-get --assume-yes install bluez-hcidump && echo +++ install successful +
 
 yes | sudo pip3 install ruuvitag-sensor==1.1.0
 yes | sudo pip3 install flask-restful==0.3.8
+yes | sudo pip3 install flask_cors==3.0.10
 
 echo "Install build packages and websocket python dependencies"
 sudo apt-get --assume-yes install build-essential libssl-dev libffi-dev python-dev

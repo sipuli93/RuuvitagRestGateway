@@ -1,14 +1,19 @@
 from flask import Flask, request
-from flask_restful import Resource, Api, abort
+from flask_restful import Resource, Api, abort, reqparse
+from flask_cors import CORS
 from ruuvitag_sensor.ruuvi import RuuviTagSensor
 from threading import Thread
 from datetime import datetime, timezone
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 macs = [] #empty = don't filter
 saved_ruuvitags = {}
+
+parser = reqparse.RequestParser()
+parser.add_argument('filter', action='append')
 
 def abort_if_mac_doesnt_exist(ruuvitag_mac):
     if ruuvitag_mac not in saved_ruuvitags:
@@ -21,9 +26,11 @@ class ruuvitags(Resource):
 
 class ruuvitags_all(Resource):
     def get(self):
+        args = parser.parse_args()
         response = {"ruuvitags":[]}
         for ruuvitag in saved_ruuvitags:
-            response["ruuvitags"].append(saved_ruuvitags[ruuvitag])
+            if (not args['filter']) or ruuvitag in args['filter']:
+                response["ruuvitags"].append(saved_ruuvitags[ruuvitag])
         return response
 
 api.add_resource(ruuvitags, '/ruuvitag/<string:ruuvitag_mac>')
@@ -45,4 +52,4 @@ thread.daemon = True
 thread.start()
 
 if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0')
+    app.run(debug=True,host='0.0.0.0')
