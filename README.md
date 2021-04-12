@@ -19,9 +19,9 @@ Api has two resources
 
 Resource | Request | Reponse
 ------------ | ------------- | -------------
-All Ruuvitags | curl http://**ip**:**port**/ | { "ruuvitags": [ { ruuvitag1 data }, { ruuvitag2 data },.. ] }
+All Ruuvitags | curl http://**ip**:**port**/ruuvitags | { "ruuvitags": [ { ruuvitag1 data }, { ruuvitag2 data },.. ] }
 Spesific Ruuvitag | curl http://**ip**:**port**/ruuvitag/**ruuvitag mac** | { "ruuvitags": [ { ruuvitag data } ] }
-Filtering Ruuvitags | curl http://**ip**:**port**/?filter=**mac**&filter=**mac2** | { "ruuvitags": [ { ruuvitag1 data }, { ruuvitag2 data } ] }
+Filtering Ruuvitags | curl http://**ip**:**port**/ruuvitags?filter=**mac**&filter=**mac2** | { "ruuvitags": [ { ruuvitag1 data }, { ruuvitag2 data } ] }
 
 ruuvitag data example:
 
