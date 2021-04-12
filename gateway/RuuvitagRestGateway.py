@@ -1,3 +1,4 @@
+import config
 from flask import Flask, request
 from flask_restful import Resource, Api, abort, reqparse
 from flask_cors import CORS
@@ -9,7 +10,7 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-macs = [] #empty = don't filter
+macs = config.filtered_macs
 saved_ruuvitags = {}
 
 parser = reqparse.RequestParser()
@@ -34,7 +35,7 @@ class ruuvitags_all(Resource):
         return response
 
 api.add_resource(ruuvitags, '/ruuvitag/<string:ruuvitag_mac>')
-api.add_resource(ruuvitags_all, '/')
+api.add_resource(ruuvitags_all, '/ruuvitags','/')
 
 #define callback function that saves found data
 def save_scan(received_data):
@@ -49,7 +50,11 @@ def worker():
 
 thread = Thread(target=worker)
 thread.daemon = True
+if len(macs) > 0:
+    print(" * Starting BLE scanner - Collecting data from {} ".format(''.join(macs)))
+else:
+    print(" * Starting BLE scanner - Collecting data from all Ruuvitags")
 thread.start()
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=config.use_debug_mode,host=config.host_ip,port=config.host_port)
