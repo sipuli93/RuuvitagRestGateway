@@ -64,7 +64,7 @@ After=bluetooth.target
 Type=simple
 Restart=always
 RestartSec=15
-User=pi
+User=$USER
 ExecStart=$servicelauncher
 [Install]
 WantedBy=default.target" > $servicefile
