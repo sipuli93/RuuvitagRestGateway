@@ -22,7 +22,7 @@ sudo apt-get --assume-yes install bluetooth bluez blueman
 echo "Install ruuvitag-sensor package"
 sudo apt-get --assume-yes install bluez-hcidump && echo +++ install successful +++
 
-yes | sudo pip3 install ruuvitag-sensor==1.1.0
+yes | sudo pip3 install ruuvitag-sensor==2.3.0
 yes | sudo pip3 install flask-restful==0.3.8
 yes | sudo pip3 install flask_cors==3.0.10
 
